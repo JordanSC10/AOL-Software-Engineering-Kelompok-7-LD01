@@ -1,0 +1,42 @@
+-- database/schema.sql
+-- Struktur tabel untuk layer database
+
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'user',
+  phone VARCHAR(30),
+  address TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE gear (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(150) NOT NULL,
+  category VARCHAR(100),
+  description TEXT,
+  rental_price INT NOT NULL,
+  stock INT NOT NULL DEFAULT 0,
+  status VARCHAR(30) NOT NULL DEFAULT 'available',
+  image_url TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transactions (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  gear_id INT NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
+  rental_start TIMESTAMP WITH TIME ZONE NOT NULL,
+  rental_end TIMESTAMP WITH TIME ZONE NOT NULL,
+  total_price INT NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'pending',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (gear_id) REFERENCES gear(id)
+);
