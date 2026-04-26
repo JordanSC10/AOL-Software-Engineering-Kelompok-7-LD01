@@ -4,10 +4,6 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./db');
 
-// ❌ HAPUS INI
-// const { User } = require('./database/mongoose-schemas');
-
-// ✅ GANTI JADI INI
 const User = require('./models/User');
 
 // ✅ LOAD ENV
@@ -53,11 +49,17 @@ app.get('/api/users', async (req, res) => {
 const paymentRoutes = require('./routes/paymentRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authRoutes = require('./routes/authRoutes');
+const equipmentRoutes = require('./routes/equipmentRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');   // 🔥 TAMBAH
+const verifyRoutes = require('./routes/verifyRoutes');   // 🔥 TAMBAH
 
 // ✅ USE ROUTES
 app.use('/api/payments', paymentRoutes);
-app.use('/api/bookings', bookingRoutes);
+app.use('/api/booking', bookingRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/equipment', equipmentRoutes);
+app.use('/api/review', reviewRoutes);   // 🔥 TAMBAH
+app.use('/api/verify', verifyRoutes);   // 🔥 TAMBAH
 
 // ================= START SERVER =================
 app.listen(port, () => {

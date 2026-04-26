@@ -21,11 +21,20 @@ exports.createBooking = async (req, res) => {
   }
 };
 
-// ✅ GET ALL BOOKINGS
+// ✅ GET ALL BOOKINGS (🔥 SUDAH FIX POPULATE + FORMAT)
 exports.getBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find();
-    res.json(bookings);
+    const bookings = await Booking.find()
+      .populate('equipmentId')
+      .populate('userId');
+
+    // 🔥 BIAR SESUAI FRONTEND (b.equipment.name)
+    const formatted = bookings.map(b => ({
+      ...b._doc,
+      equipment: b.equipmentId
+    }));
+
+    res.json(formatted);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -40,9 +49,15 @@ exports.updateBookingStatus = async (req, res) => {
       req.params.id,
       { status },
       { new: true }
-    );
+    )
+      .populate('equipmentId')
+      .populate('userId');
 
-    res.json(booking);
+    res.json({
+      ...booking._doc,
+      equipment: booking.equipmentId
+    });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
