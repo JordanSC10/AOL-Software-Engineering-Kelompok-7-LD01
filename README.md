@@ -19,7 +19,7 @@ API auth (login & register)
 User schema (database)
 Integrasi auth (frontend ↔ backend)
 Output:
-Login & register bekerja
+Login & register bekerja. code sudah dipush ke master -> jadiin main = master and lalu dihapus. Itu kenapa commit pertama tidak ada history.
 
 Sprint 3 (27 Apr – 3 Mei 2026) — Core Kickstart
 Backlog:
