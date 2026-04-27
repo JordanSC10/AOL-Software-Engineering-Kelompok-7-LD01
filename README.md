@@ -1,80 +1,63 @@
 # AOL-Software-Engineering-Kelompok-7-LD01
 
-Project GearShare dengan frontend React yang sudah siap.
+Sprint 1 (31 Mar – 6 Apr 2026) — Planning & Setup
+Backlog:
+Requirement gathering (fitur & scope)
+User flow & use case
+Setup repo & struktur project
+Setup frontend (React)
+Setup backend (Node.js)
+Setup database (MongoDB connection)
+Output:
+Project siap jalan (FE + BE + DB)
 
-## Struktur Proyek
-- `frontend/`: aplikasi React
-- `database/`: desain struktur MongoDB dan dokumentasi
+Sprint 2 (7 Apr – 14 Apr 2026) — Design & Authentication
+Backlog:
+Landing page (frontend)
+Login & register page (frontend)
+API auth (login & register)
+User schema (database)
+Integrasi auth (frontend ↔ backend)
+Output:
+Login & register bekerja
 
-## Database Section
-Lihat `database/README.md` untuk detail desain koleksi MongoDB:
-- `users`
-- `equipments`
-- `transactions`
+Sprint 3 (27 Apr – 3 Mei 2026) — Core Kickstart
+Backlog:
+Rapihin struktur project
+Dashboard basic (static layout)
+Schema peralatan (final draft)
+API peralatan (setup + basic endpoint)
+Setup model & controller booking (awal)
+Dokumentasi arsitektur
+Output:
+Pondasi fitur utama siap dan dashboard basic jadi
+Sprint 4 (4 Mei – 10 Mei 2026) — Core Development
+Backlog:
+CRUD peralatan (backend full)
+List peralatan (frontend)
+Detail peralatan page
+API booking system (basic flow)
+Integrasi frontend dan backend
+Validasi booking
+Output:
+User bisa lihat & booking alat (flow dasar jalan)
 
-## Available Scripts
+Sprint 5 (11 Mei – 17 Mei 2026) — Feature Completion
+Backlog:
+Dashboard dinamis (real data)
+Status booking & transaksi
+UI improvement (cleaning & UX)
+Auth refinement (security)
+Error handling & edge cases
+Output:
+Sistem sudah lengkap dan usable
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.
-
-The build is minified and the filenames include the hashes.
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
+Sprint 6 (18 Mei – 24 Mei 2026) — QA & Final
+Backlog:
+End-to-end testing
+Bug fixing final
+Optimasi UI/UX
+Dokumentasi PKM lengkap
+Persiapan demo & presentasi
+Output:
+Siap presentasi
