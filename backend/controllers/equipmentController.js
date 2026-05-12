@@ -9,27 +9,50 @@ exports.createEquipment = async (req, res) => {
     });
 
     await equipment.save();
+
     res.status(201).json(equipment);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// ✅ GET ALL (buat Home)
+// ✅ GET ALL (🔥 + SEARCH & FILTER)
 exports.getEquipments = async (req, res) => {
   try {
-    const data = await Equipment.find();
+    const { search, category } = req.query;
+
+    let query = {};
+
+    // 🔍 SEARCH NAME
+    if (search) {
+      query.name = { $regex: search, $options: 'i' };
+    }
+
+    // 📂 FILTER CATEGORY
+    if (category) {
+      query.category = category;
+    }
+
+    const data = await Equipment.find(query);
+
     res.json(data);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// ✅ GET BY ID (buat Detail page)
+// ✅ GET BY ID (🔥 + SAFE CHECK)
 exports.getEquipment = async (req, res) => {
   try {
     const data = await Equipment.findById(req.params.id);
+
+    if (!data) {
+      return res.status(404).json({ msg: 'Equipment not found' });
+    }
+
     res.json(data);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -43,7 +66,13 @@ exports.updateEquipment = async (req, res) => {
       req.body,
       { new: true }
     );
+
+    if (!data) {
+      return res.status(404).json({ msg: 'Equipment not found' });
+    }
+
     res.json(data);
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -52,8 +81,14 @@ exports.updateEquipment = async (req, res) => {
 // ✅ DELETE
 exports.deleteEquipment = async (req, res) => {
   try {
-    await Equipment.findByIdAndDelete(req.params.id);
+    const data = await Equipment.findByIdAndDelete(req.params.id);
+
+    if (!data) {
+      return res.status(404).json({ msg: 'Equipment not found' });
+    }
+
     res.json({ msg: 'Deleted' });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
