@@ -15,24 +15,44 @@ export default function Home() {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>GearShare Marketplace</h1>
+    <div style={{ padding: "40px 5%", maxWidth: "1400px", margin: "0 auto" }}>
+      <div style={{ marginBottom: '40px', textAlign: 'center' }}>
+        <h1 style={{ fontSize: '36px', fontWeight: '900', marginBottom: '10px' }}>Explore Gear</h1>
+        <p style={{ color: '#666' }}>Sewa alat hobi & olahraga dari owner terpercaya.</p>
+      </div>
 
-      <input
-        placeholder="Search equipment..."
-        style={{ padding: "10px", width: "100%", marginBottom: "20px" }}
-        onChange={e => setSearch(e.target.value)}
-      />
+      <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto 50px' }}>
+        <input
+          placeholder="Cari kamera, tenda, atau raket..."
+          style={searchStyle}
+          onChange={e => setSearch(e.target.value)}
+        />
+      </div>
 
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-        gap: "20px"
+        gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+        gap: "30px"
       }}>
         {filtered.map(item => (
           <ItemCard key={item._id} item={item} />
         ))}
       </div>
+      
+      {filtered.length === 0 && (
+        <p style={{ textAlign: 'center', color: '#999', marginTop: '50px' }}>Barang nggak ketemu, coba cari yang lain...</p>
+      )}
     </div>
   );
 }
+
+const searchStyle = {
+  padding: "15px 25px",
+  width: "100%",
+  borderRadius: "50px",
+  border: "1px solid #ddd",
+  outline: "none",
+  fontSize: "16px",
+  boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+  transition: "0.3s"
+};
