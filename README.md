@@ -77,6 +77,5 @@ Persiapan demo aplikasi
 Persiapan presentasi & PPT
 Simulasi demo project
 Final revisi bug
-
 Output:
 Project siap dipresentasikan dan final sebelum deadline 9 Juni 2026.
