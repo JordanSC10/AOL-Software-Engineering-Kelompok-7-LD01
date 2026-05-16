@@ -1,5 +1,4 @@
 # AOL-Software-Engineering-Kelompok-7-LD01
-
 Sprint 1 (31 Mar – 6 Apr 2026) — Planning & Setup
 Backlog:
 Requirement gathering (fitur & scope)
@@ -19,7 +18,8 @@ API auth (login & register)
 User schema (database)
 Integrasi auth (frontend ↔ backend)
 Output:
-Login & register bekerja. code sudah dipush ke master -> jadiin main = master and lalu dihapus. Itu kenapa commit pertama tidak ada history.
+Login & register bekerja.
+Code sudah dipush ke master lalu branch utama dipindahkan menjadi main dan branch lama dihapus, sehingga histori commit pertama tidak seluruhnya tercatat.
 
 Sprint 3 (27 Apr – 3 Mei 2026) — Core Kickstart
 Backlog:
@@ -30,7 +30,7 @@ API peralatan (setup + basic endpoint)
 Setup model & controller booking (awal)
 Dokumentasi arsitektur
 Output:
-Pondasi fitur utama siap dan dashboard basic jadi
+Pondasi fitur utama siap dan dashboard basic jadi.
 
 Sprint 4 (4 Mei – 10 Mei 2026) — Core Development
 Backlog:
@@ -41,7 +41,7 @@ API booking system (basic flow)
 Integrasi frontend dan backend
 Validasi booking
 Output:
-User bisa lihat & booking alat (flow dasar jalan)
+User bisa lihat & booking alat (flow dasar jalan).
 
 Sprint 5 (11 Mei – 17 Mei 2026) — Feature Completion
 Backlog:
@@ -50,15 +50,33 @@ Status booking & transaksi
 UI improvement (cleaning & UX)
 Auth refinement (security)
 Error handling & edge cases
+Review/rating system
+Upload verification/KTP
+Chat & conversation feature
+Payment/transaction flow
 Output:
-Sistem sudah lengkap dan usable
+Sistem sudah lengkap dan usable.
 
-Sprint 6 (18 Mei – 24 Mei 2026) — QA & Final
+Sprint 6 (18 Mei – 24 Mei 2026) — QA & Testing
 Backlog:
 End-to-end testing
 Bug fixing final
+Testing seluruh flow sistem
+API cleanup & refactor
+Mobile responsiveness
 Optimasi UI/UX
-Dokumentasi PKM lengkap
-Persiapan demo & presentasi
+Final deployment setup
 Output:
-Siap presentasi
+Sistem stabil dan siap untuk finalisasi project.
+
+Sprint 7 (25 Mei – 8 Jun 2026) — Documentation & Final Preparation
+Backlog:
+Dokumentasi PKM lengkap
+Dokumentasi API & arsitektur
+Persiapan demo aplikasi
+Persiapan presentasi & PPT
+Simulasi demo project
+Final revisi bug
+
+Output:
+Project siap dipresentasikan dan final sebelum deadline 9 Juni 2026.
