@@ -1,6 +1,7 @@
 // backend/server.js
 
 const express = require('express');
+const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -31,6 +32,9 @@ const port = process.env.PORT || 5000;
 
 // ================= MIDDLEWARE =================
 
+// ✅ CORS
+app.use(cors());
+
 // ✅ JSON
 app.use(express.json());
 
@@ -42,17 +46,24 @@ app.use('/uploads', express.static('uploads'));
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  // ✅ JOIN PRIVATE ROOM
-  socket.on('joinConversation', (conversationId) => {
+  // ✅ JOIN PRIVATE ROOM (support both event names)
+  const handleJoinRoom = (conversationId) => {
+    if (!conversationId) return;
     socket.join(conversationId);
-
     console.log(`Joined room: ${conversationId}`);
-  });
+  };
+  socket.on('joinConversation', handleJoinRoom);
+  socket.on('join_room', handleJoinRoom);
 
-  // ✅ SEND MESSAGE
-  socket.on('sendMessage', (message) => {
-    io.to(message.conversationId).emit('message', message);
-  });
+  // ✅ SEND MESSAGE (support both event names and emit formats)
+  const handleSendMessage = (message) => {
+    const room = message?.conversationId || message?.room;
+    if (!room) return;
+    io.to(room).emit('receive_message', message);
+    io.to(room).emit('message', message);
+  };
+  socket.on('sendMessage', handleSendMessage);
+  socket.on('send_message', handleSendMessage);
 
   // ✅ DISCONNECT
   socket.on('disconnect', () => {
