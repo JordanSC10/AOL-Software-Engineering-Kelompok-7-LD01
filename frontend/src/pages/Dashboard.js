@@ -60,8 +60,8 @@ export default function Dashboard() {
           </h4>
           <p style={{ margin: 0, fontSize: '14px' }}>
             {isPending 
-              ? "Sabar ya Binusian, admin lagi ngecek KTP lo. Kalau udah beres baru bisa buka toko." 
-              : "Lo harus verifikasi KTP dulu di halaman Verifikasi sebelum bisa mulai jualan gear."}
+              ? "Mohon tunggu, admin sedang meninjau dokumen KTP Anda. Fitur pengelolaan barang akan terbuka setelah akun disetujui." 
+              : "Anda wajib melakukan verifikasi KTP terlebih dahulu untuk dapat mengunggah perlengkapan sewa."}
           </p>
         </div>
       )}
