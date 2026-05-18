@@ -5,6 +5,10 @@ export default function BookingPage({ id }) {
   const [file, setFile] = useState();
 
   const uploadPayment = async () => {
+    if (!file) {
+      alert("Please select a file first");
+      return;
+    }
     const form = new FormData();
     form.append("payment", file);
 

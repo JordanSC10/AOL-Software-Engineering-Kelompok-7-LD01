@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/gearshare';
+const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://willianawesome22_db_user:Password@gearshare.wdbc5hf.mongodb.net/?appName=GearShare';
 
 function connectDB() {
   mongoose.set('strictQuery', false);

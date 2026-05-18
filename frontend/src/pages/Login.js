@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'; 
 import { useNavigate } from 'react-router-dom'; 
 import axios from '../api/axios';
-import AuthContext from '../context/AuthContext'; 
+import { AuthContext } from '../context/AuthContext';
 
 export default function Login() {
   const { setUser } = useContext(AuthContext);

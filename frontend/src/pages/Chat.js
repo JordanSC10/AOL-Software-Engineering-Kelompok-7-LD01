@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 import { io } from "socket.io-client";
-import AuthContext from '../context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 // Koneksi ke backend (sesuain port backend lo)
 const socket = io("http://localhost:5000");
