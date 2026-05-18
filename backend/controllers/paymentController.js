@@ -4,21 +4,14 @@ const Booking = require('../models/Booking');
 // 🔥 CREATE PAYMENT (UPLOAD BUKTI - SESUAI FRONTEND)
 exports.createPayment = async (req, res) => {
   try {
-    const bookingId = req.params.id || req.body.bookingId;
-    const amount = Number(req.body.amount) || 0;
-    const method = req.body.method || 'Unknown';
-
-    if (!bookingId) {
-      return res.status(400).json({ error: 'Booking ID is required' });
-    }
+    const bookingId = req.params.id;
 
     const payment = new Payment({
       bookingId,
       userId: req.body.userId || null,
-      method,
-      amount,
+      amount: 0,       // sementara (karena frontend belum kirim)
       deposit: 0,
-      total: amount,
+      total: 0,
       proof: req.file ? `/uploads/${req.file.filename}` : null,
       status: 'pending'
     });
