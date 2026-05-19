@@ -1,44 +1,29 @@
-const sendMessage = async (req, res) => {
-  try {
-    const { conversationId, sender, text } = req.body;
+const Message = require('../models/Message');
 
-    // temporary response
-    res.status(200).json({
-      success: true,
-      message: "Message sent successfully",
-      data: {
-        conversationId,
-        sender,
-        text,
-      },
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+// ✅ SEND MESSAGE
+exports.sendMessage = async (req, res) => {
+  try {
+    const message = new Message(req.body);
+
+    await message.save();
+
+    res.status(201).json(message);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-const getMessages = async (req, res) => {
+// ✅ GET MESSAGES BY CONVERSATION
+exports.getMessages = async (req, res) => {
   try {
-    const { conversationId } = req.params;
+    const messages = await Message.find({
+      conversationId: req.params.conversationId
+    }).populate('senderId');
 
-    // temporary response
-    res.status(200).json({
-      success: true,
-      conversationId,
-      messages: [],
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+    res.json(messages);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-};
-
-module.exports = {
-  sendMessage,
-  getMessages,
 };

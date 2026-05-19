@@ -1,38 +1,35 @@
-const createConversation = async (req, res) => {
-  try {
-    const { members } = req.body;
+const Conversation = require('../models/Conversation');
 
-    res.status(200).json({
-      success: true,
-      message: "Conversation created",
-      members,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+// ✅ CREATE CONVERSATION
+exports.createConversation = async (req, res) => {
+  try {
+    const conversation = new Conversation(req.body);
+
+    await conversation.save();
+
+    res.status(201).json(conversation);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
 
-const getUserConversations = async (req, res) => {
+// ✅ GET USER CONVERSATIONS
+exports.getUserConversations = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const conversations = await Conversation.find({
+      $or: [
+        { renterId: req.params.userId },
+        { ownerId: req.params.userId }
+      ]
+    })
+      .populate('renterId')
+      .populate('ownerId')
+      .populate('equipmentId');
 
-    res.status(200).json({
-      success: true,
-      userId,
-      conversations: [],
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+    res.json(conversations);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-};
-
-module.exports = {
-  createConversation,
-  getUserConversations,
 };

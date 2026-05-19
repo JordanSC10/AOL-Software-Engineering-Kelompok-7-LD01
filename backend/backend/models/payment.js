@@ -6,25 +6,60 @@ const paymentSchema = new mongoose.Schema({
     ref: 'Booking',
     required: true
   },
+
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
-  amount: Number,   // biaya sewa
-  deposit: Number,  // jaminan
-  total: Number,    // amount + deposit
 
+  // ✅ BIAYA SEWA
+  amount: {
+    type: Number,
+    default: 0
+  },
+
+  // ✅ JAMINAN / DEPOSIT
+  deposit: {
+    type: Number,
+    default: 0
+  },
+
+  // ✅ TOTAL PEMBAYARAN
+  total: {
+    type: Number,
+    default: 0
+  },
+
+  // ✅ METODE PEMBAYARAN
   method: {
     type: String,
+    enum: ['transfer', 'qris', 'cod'],
     default: 'transfer'
   },
 
-  proof: String, // URL / filename bukti transfer
+  // ✅ BUKTI PEMBAYARAN
+  proof: {
+    type: String,
+    default: null
+  },
 
+  // ✅ QR OWNER (OPTIONAL)
+  ownerQR: {
+    type: String,
+    default: null
+  },
+
+  // ✅ TEMPAT COD (OPTIONAL)
+  codLocation: {
+    type: String,
+    default: null
+  },
+
+  // ✅ STATUS PAYMENT
   status: {
     type: String,
-    enum: ['pending', 'verified', 'rejected'],
+    enum: ['pending', 'verified', 'rejected', 'refunded'],
     default: 'pending'
   }
 
