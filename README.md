@@ -69,7 +69,7 @@ Final deployment setup
 Output:
 Sistem stabil dan siap untuk finalisasi project.
 
-Sprint 7 (25 Mei – 8 Jun 2026) — Documentation & Final Preparation
+Sprint 7 (25 Mei – 8 Juni 2026) — Documentation & Final Preparation
 Backlog:
 Dokumentasi PKM lengkap
 Dokumentasi API & arsitektur

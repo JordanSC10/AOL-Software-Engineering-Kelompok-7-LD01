@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import API from "../api/axios";
-import AuthContext from "../context/AuthContext"; 
+import { AuthContext } from '../context/AuthContext'; 
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext); 
@@ -39,7 +39,7 @@ export default function Dashboard() {
     }
   };
 
-  const isVerified = user?.isVerified === "approved";
+  const isVerified = user?.isVerified === "confirmed";
   const isPending = user?.isVerified === "pending";
 
   return (
@@ -103,7 +103,7 @@ export default function Dashboard() {
             <div key={b._id} style={cardStyle}>
               <p><strong>{b.equipment.name}</strong> <span style={statusBadge}>{b.status}</span></p>
               <div style={{ display: 'flex', gap: '10px' }}>
-                <button onClick={() => handleAction(b._id, "approved")} style={actionBtn('#28a745')}>Approve</button>
+                <button onClick={() => handleAction(b._id, "confirmed")} style={actionBtn('#28a745')}>Approve</button>
                 <button onClick={() => handleAction(b._id, "rejected")} style={actionBtn('#dc3545')}>Reject</button>
               </div>
             </div>

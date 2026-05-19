@@ -1,4 +1,4 @@
-const Equipment = require('../models/Equipment');
+const Equipment = require('../models/equipment');
 
 // ✅ CREATE
 exports.createEquipment = async (req, res) => {

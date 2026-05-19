@@ -26,7 +26,7 @@ export default function Register() {
   const submit = async (e) => {
     e.preventDefault();
     
-    if (!form.ktp) return alert('Pake KTP dulu bos, biar aman!');
+    if (!form.ktp) return alert('Pake KTP dulu bos, biar aman transaksinya!');
 
     const formData = new FormData();
     // Append semua field ke FormData
@@ -38,11 +38,11 @@ export default function Register() {
       await axios.post('/auth/register', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
-      alert('Registrasi Berhasil! KTP lo lagi dicek sama admin.');
+      alert('Registrasi Berhasil! KTP anda lagi dicek sama admin.');
       // Redirect ke login atau dashboard di sini nanti
     } catch (err) {
       console.error(err);
-      alert('Waduh, registrasi gagal. Cek koneksi atau data lo.');
+      alert('Waduh, registrasi gagal. Cek koneksi atau data anda.');
     }
   };
 

@@ -1,5 +1,3 @@
-// backend/server.js
-
 const express = require('express');
 const cors = require('cors');
 const http = require('http');
@@ -10,62 +8,73 @@ const connectDB = require('./db');
 
 const User = require('./models/User');
 
-// ✅ LOAD ENV
+// ================= ENV =================
+
 dotenv.config();
 
-// ✅ CONNECT DATABASE
+// ================= DB =================
+
 connectDB();
+
+// ================= APP =================
 
 const app = express();
 
-// 🔥 HTTP SERVER (WAJIB BUAT SOCKET.IO)
 const server = http.createServer(app);
 
-// 🔥 SOCKET.IO
+// ================= SOCKET.IO =================
+
 const io = new Server(server, {
   cors: {
-    origin: '*'
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
+
+// ================= PORT =================
 
 const port = process.env.PORT || 5000;
 
 // ================= MIDDLEWARE =================
 
-// ✅ CORS
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
-// ✅ JSON
 app.use(express.json());
 
-// ✅ STATIC FILE (UPLOADS)
 app.use('/uploads', express.static('uploads'));
 
-// ================= SOCKET =================
+// ================= SOCKET EVENTS =================
 
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  // ✅ JOIN PRIVATE ROOM (support both event names)
   const handleJoinRoom = (conversationId) => {
     if (!conversationId) return;
+
     socket.join(conversationId);
+
     console.log(`Joined room: ${conversationId}`);
   };
+
   socket.on('joinConversation', handleJoinRoom);
   socket.on('join_room', handleJoinRoom);
 
-  // ✅ SEND MESSAGE (support both event names and emit formats)
   const handleSendMessage = (message) => {
     const room = message?.conversationId || message?.room;
+
     if (!room) return;
+
     io.to(room).emit('receive_message', message);
     io.to(room).emit('message', message);
   };
+
   socket.on('sendMessage', handleSendMessage);
   socket.on('send_message', handleSendMessage);
 
-  // ✅ DISCONNECT
   socket.on('disconnect', () => {
     console.log('User disconnected');
   });
@@ -73,12 +82,10 @@ io.on('connection', (socket) => {
 
 // ================= BASIC ROUTES =================
 
-// ✅ HOME
 app.get('/', (req, res) => {
   res.send('Backend is running 🚀');
 });
 
-// ✅ STATUS CHECK
 app.get('/api/status', (req, res) => {
   res.json({
     success: true,
@@ -86,7 +93,6 @@ app.get('/api/status', (req, res) => {
   });
 });
 
-// ✅ USERS
 app.get('/api/users', async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -106,7 +112,6 @@ app.get('/api/users', async (req, res) => {
 
 // ================= FEATURE ROUTES =================
 
-// ✅ IMPORT ROUTES
 const paymentRoutes = require('./routes/paymentRoutes');
 const bookingRoutes = require('./routes/bookingRoutes');
 const authRoutes = require('./routes/authRoutes');
@@ -116,7 +121,6 @@ const verifyRoutes = require('./routes/verifyRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const conversationRoutes = require('./routes/conversationRoutes');
 
-// ✅ USE ROUTES
 app.use('/api/payments', paymentRoutes);
 app.use('/api/booking', bookingRoutes);
 app.use('/api/auth', authRoutes);
@@ -126,10 +130,7 @@ app.use('/api/verify', verifyRoutes);
 app.use('/api/message', messageRoutes);
 app.use('/api/conversation', conversationRoutes);
 
-// ================= START SERVER =================
-
-// ❌ JANGAN app.listen()
-// ✅ PAKAI server.listen()
+// ================= START =================
 
 server.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}`);
