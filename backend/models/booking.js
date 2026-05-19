@@ -5,30 +5,18 @@ const bookingSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
-
   equipmentId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Equipment'
   },
-
   startDate: Date,
   endDate: Date,
-
   totalPrice: Number,
-
   status: {
     type: String,
-    enum: [
-      'pending',
-      'approved',
-      'rejected',
-      'confirmed',
-      'cancelled',
-      'completed'
-    ],
+    enum: ['pending', 'approved', 'rejected', 'confirmed', 'cancelled', 'completed'],
     default: 'pending'
   }
-
 }, { timestamps: true });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+module.exports = mongoose.models.Booking || mongoose.model('Booking', bookingSchema);

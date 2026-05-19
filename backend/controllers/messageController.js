@@ -1,75 +1,53 @@
-<<<<<<< HEAD
 const Message = require('../models/Message');
 
 // ✅ SEND MESSAGE
-exports.sendMessage = async (req, res) => {
-  try {
-    const message = new Message(req.body);
-
-    await message.save();
-
-    res.status(201).json(message);
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
-// ✅ GET MESSAGES BY CONVERSATION
-exports.getMessages = async (req, res) => {
-  try {
-    const messages = await Message.find({
-      conversationId: req.params.conversationId
-    }).populate('senderId');
-
-    res.json(messages);
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-=======
 const sendMessage = async (req, res) => {
   try {
     const { conversationId, sender, text } = req.body;
 
-    // temporary response
-    res.status(200).json({
-      success: true,
-      message: "Message sent successfully",
-      data: {
-        conversationId,
-        sender,
-        text,
-      },
+    const message = new Message({
+      conversationId,
+      sender,
+      text
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
+
+    await message.save();
+
+    res.status(201).json({
+      success: true,
+      data: message
+    });
+
+  } catch (err) {
+    res.status(500).json({ 
+      success: false, 
+      error: err.message 
     });
   }
 };
 
+// ✅ GET MESSAGES BY CONVERSATION
 const getMessages = async (req, res) => {
   try {
     const { conversationId } = req.params;
+    
+    const messages = await Message.find({ conversationId })
+      .populate('sender', 'username email'); // nampilin info sender biar gak cuma ID
 
-    // temporary response
     res.status(200).json({
       success: true,
-      conversationId,
-      messages: [],
+      messages: messages
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
+
+  } catch (err) {
+    res.status(500).json({ 
+      success: false, 
+      error: err.message 
     });
   }
 };
 
 module.exports = {
   sendMessage,
-  getMessages,
->>>>>>> bc9fa8e7 (Update features)
+  getMessages
 };

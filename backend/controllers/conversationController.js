@@ -1,75 +1,62 @@
-<<<<<<< HEAD
 const Conversation = require('../models/Conversation');
 
 // ✅ CREATE CONVERSATION
-exports.createConversation = async (req, res) => {
+const createConversation = async (req, res) => {
   try {
-    const conversation = new Conversation(req.body);
+    const { renterId, ownerId, equipmentId } = req.body;
 
-    await conversation.save();
+    // Cek dulu apakah percakapan untuk barang ini sudah ada antara kedua user ini
+    let conversation = await Conversation.findOne({
+      renterId,
+      ownerId,
+      equipmentId
+    });
 
-    res.status(201).json(conversation);
+    if (!conversation) {
+      conversation = new Conversation({
+        renterId,
+        ownerId,
+        equipmentId
+      });
+      await conversation.save();
+    }
+
+    res.status(201).json({
+      success: true,
+      data: conversation
+    });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
 // ✅ GET USER CONVERSATIONS
-exports.getUserConversations = async (req, res) => {
-  try {
-    const conversations = await Conversation.find({
-      $or: [
-        { renterId: req.params.userId },
-        { ownerId: req.params.userId }
-      ]
-    })
-      .populate('renterId')
-      .populate('ownerId')
-      .populate('equipmentId');
-
-    res.json(conversations);
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-=======
-const createConversation = async (req, res) => {
-  try {
-    const { members } = req.body;
-
-    res.status(200).json({
-      success: true,
-      message: "Conversation created",
-      members,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-};
-
 const getUserConversations = async (req, res) => {
   try {
     const { userId } = req.params;
 
+    const conversations = await Conversation.find({
+      $or: [
+        { renterId: userId },
+        { ownerId: userId }
+      ]
+    })
+      .populate('renterId', 'username email')
+      .populate('ownerId', 'username email')
+      .populate('equipmentId', 'name price image');
+
     res.status(200).json({
       success: true,
-      userId,
-      conversations: [],
+      conversations
     });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: error.message,
-    });
+
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
 module.exports = {
   createConversation,
-  getUserConversations,
->>>>>>> bc9fa8e7 (Update features)
+  getUserConversations
 };
