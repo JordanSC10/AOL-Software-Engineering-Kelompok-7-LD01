@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import logoGearShare from "../assets/gearshare-logo.png";
 
 export default function Navbar() {
   const { user, setUser } = useContext(AuthContext);
@@ -9,9 +10,7 @@ export default function Navbar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    
     setUser(null);
-    
     alert("Berhasil Logout!");
     navigate("/login");
   };
@@ -19,8 +18,12 @@ export default function Navbar() {
   return (
     <nav style={navStyle}>
       <div style={logoStyle}>
-        <Link to="/" style={{ textDecoration: 'none', color: '#1a1a1a' }}>
-          Gear<span style={{ color: '#007bff' }}>Share</span>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <img 
+            src={logoGearShare} 
+            alt="GearShare Logo" 
+            style={logoImageStyle} 
+          />
         </Link>
       </div>
 
@@ -31,10 +34,9 @@ export default function Navbar() {
       </div>
 
       <div style={authContainerStyle}>
-        {/* LOGIC LOGIN/LOGOUT*/}
         {user ? (
           <>
-            <span style={{ fontSize: '14px', fontWeight: 'bold' }}>Halo, {user.name}!</span>
+            <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#fff' }}>Halo, {user.name}!</span>
             <button onClick={handleLogout} style={logoutBtnStyle}>Logout</button>
           </>
         ) : (
@@ -48,22 +50,31 @@ export default function Navbar() {
   );
 }
 
+const logoImageStyle = {
+  height: '110px', 
+  marginTop: '5px', 
+  objectFit: 'contain',
+  filter: 'drop-shadow(0px 0px 4px rgba(255,255,255,0.1)) brightness(1.1)',
+  transition: '0.3s' 
+};
+
 const navStyle = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '15px 5%',
-  backgroundColor: '#ffffff',
-  boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
+  padding: '0 5%', 
+  height: '70px',  
+  backgroundColor: '#004a73', 
+  boxShadow: '0 4px 15px rgba(0,0,0,0.2)', 
   position: 'sticky',
   top: 0,
-  zIndex: 1000
+  zIndex: 1000,
+  overflow: 'hidden',
+  borderBottom: '1px solid rgba(255,255,255,0.1)' 
 };
 
 const logoStyle = {
-  fontSize: '24px',
-  fontWeight: '900',
-  letterSpacing: '-1px'
+  cursor: 'pointer'
 };
 
 const linkContainerStyle = {
@@ -79,21 +90,23 @@ const authContainerStyle = {
 
 const linkStyle = {
   textDecoration: 'none',
-  color: '#555',
+  color: '#ffffff', 
   fontSize: '14px',
   fontWeight: '600',
-  transition: '0.3s'
+  transition: '0.3s',
+  opacity: '0.9'
 };
 
 const registerBtnStyle = {
   textDecoration: 'none',
-  backgroundColor: '#1a1a1a',
-  color: '#fff',
-  padding: '10px 20px',
-  borderRadius: '10px',
+  backgroundColor: '#ffffff', 
+  color: '#004a73',       
+  padding: '10px 25px',
+  borderRadius: '50px',
   fontSize: '14px',
   fontWeight: 'bold',
-  transition: '0.3s'
+  transition: '0.3s',
+  boxShadow: '0 4px 10px rgba(0,0,0,0.1)'
 };
 
 const logoutBtnStyle = {
