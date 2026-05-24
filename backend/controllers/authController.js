@@ -5,21 +5,38 @@ const jwt = require('jsonwebtoken');
 // ✅ REGISTER
 exports.register = async (req, res) => {
   try {
+    console.log('BODY:', req.body);
+    console.log('FILE:', req.file);
+
     const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        msg: 'Name, email and password are required'
+      });
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = new User({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
+      ktp: req.file ? `/uploads/${req.file.filename}` : ''
     });
 
     await user.save();
 
-    res.status(201).json({ msg: 'User registered' });
+    res.status(201).json({
+      msg: 'User registered'
+    });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error(err);
+
+    res.status(500).json({
+      error: err.message
+    });
   }
 };
 
