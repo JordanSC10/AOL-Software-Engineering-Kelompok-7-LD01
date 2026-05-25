@@ -9,24 +9,28 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin'], default: 'user' },
   phone: { type: String, trim: true },
   address: { type: String, trim: true },
-  profilePicture: { type: String, default: '' } // Tambahan untuk UI Chat
+  profilePicture: { type: String, default: '' }
 }, {
   timestamps: true,
 });
 
-// --- 2. GEAR SCHEMA (Sebelumnya Equipment) ---
+// --- 2. GEAR SCHEMA ---
 const gearSchema = new mongoose.Schema({
   name: { type: String, required: true, trim: true },
   category: { type: String, trim: true },
   description: { type: String, trim: true },
   rentalPrice: { type: Number, required: true, min: 0 },
   stock: { type: Number, required: true, min: 0, default: 0 },
-  status: { type: String, enum: ['available', 'rented', 'maintenance'], default: 'available' },
+  // Status diubah untuk merepresentasikan visibilitas listing
+  listingStatus: { type: String, enum: ['active', 'inactive', 'archived'], default: 'active' }, 
   imageUrl: { type: String, trim: true },
-  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true } // Tambahan: Siapa yang punya alat ini?
+  ownerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 }, {
   timestamps: true,
 });
+
+// Menambahkan index untuk pencarian alat yang aktif
+gearSchema.index({ listingStatus: 1, category: 1 }); 
 
 // --- 3. TRANSACTION SCHEMA ---
 const transactionSchema = new mongoose.Schema({
@@ -41,10 +45,14 @@ const transactionSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// --- 4. CONVERSATION SCHEMA (Fitur Chat) ---
+// Index tambahan untuk mempercepat query history transaksi
+transactionSchema.index({ userId: 1, status: 1 });
+transactionSchema.index({ gearId: 1 });
+
+// --- 4. CONVERSATION SCHEMA ---
 const conversationSchema = new mongoose.Schema({
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  gearId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gear' }, // Chat terkait alat apa
+  gearId: { type: mongoose.Schema.Types.ObjectId, ref: 'Gear' }, 
   lastMessage: {
     text: String,
     senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -52,9 +60,9 @@ const conversationSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-conversationSchema.index({ participants: 1 }); // Index untuk pencarian inbox
+conversationSchema.index({ participants: 1 }); 
 
-// --- 5. MESSAGE SCHEMA (Fitur Chat) ---
+// --- 5. MESSAGE SCHEMA ---
 const messageSchema = new mongoose.Schema({
   conversationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Conversation', required: true },
   senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -62,7 +70,7 @@ const messageSchema = new mongoose.Schema({
   isRead: { type: Boolean, default: false },
 }, { timestamps: true });
 
-messageSchema.index({ conversationId: 1, createdAt: 1 }); // Index untuk performa chat history
+messageSchema.index({ conversationId: 1, createdAt: 1 }); 
 
 // Model Exports
 const User = mongoose.model('User', userSchema);
