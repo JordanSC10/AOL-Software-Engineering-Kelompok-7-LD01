@@ -2,16 +2,17 @@
   box-sizing: border-box;
 }
 
-.app-container {
+body {
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
-  position: relative;
-  z-index: 1;
-  background: radial-gradient(circle at top left, rgba(102, 58, 230, 0.32), transparent 22%),
-              radial-gradient(circle at 90% 18%, rgba(255, 81, 210, 0.16), transparent 18%),
-              linear-gradient(135deg, #06091f 0%, #170c4f 42%, #3a1e8d 72%, #b94dff 100%);
-  background-attachment: fixed;
-  color: #f7f2ff;
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(180deg, #007ABD 0%, #005f91 50%, #004a73 100%) !important;
+  background-attachment: fixed !important;
+  color: #ffffff !important;
+}
+
+.app-container {
+  background: transparent !important;
 }
 
 .app-container.dark-mode {

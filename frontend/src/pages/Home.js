@@ -23,7 +23,6 @@ export default function Home() {
       minHeight: '100vh',
       paddingBottom: '100px' 
     }}>
-      {/* HERO SECTION */}
       <div style={{ 
         padding: '0px 5% 80px', 
         textAlign: 'center',
@@ -61,7 +60,6 @@ export default function Home() {
         </p>
       </div>
 
-      {/* SEARCH & GRID AREA */}
       <div style={{ padding: "0 5%", maxWidth: "1400px", margin: "-30px auto 0" }}>
         <div style={{ position: 'relative', maxWidth: '600px', margin: '0 auto 50px' }}>
           <input

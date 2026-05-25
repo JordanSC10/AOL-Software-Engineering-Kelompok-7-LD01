@@ -29,6 +29,8 @@ export default function Navbar() {
 
       <div style={linkContainerStyle}>
         <Link to="/" style={linkStyle}>Home</Link>
+        {/* MENU BARU DISINI */}
+        <Link to="/about" style={linkStyle}>About Us</Link> 
         <Link to="/dashboard" style={linkStyle}>Dashboard</Link>
         <Link to="/verify" style={linkStyle}>Verify KTP</Link>
       </div>
@@ -64,7 +66,8 @@ const navStyle = {
   alignItems: 'center',
   padding: '0 5%', 
   height: '70px',  
-  backgroundColor: '#004a73', 
+  backgroundColor: 'rgba(0, 74, 115, 0.95)', 
+  backdropFilter: 'blur(10px)',
   boxShadow: '0 4px 15px rgba(0,0,0,0.2)', 
   position: 'sticky',
   top: 0,

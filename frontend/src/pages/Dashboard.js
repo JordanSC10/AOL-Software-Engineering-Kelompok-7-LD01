@@ -43,10 +43,9 @@ export default function Dashboard() {
   const isPending = user?.isVerified === "pending";
 
   return (
-    <div style={{ padding: "40px", maxWidth: "1000px", margin: "0 auto" }}>
+    <div style={{ padding: "40px", maxWidth: "1000px", margin: "0 auto", color: "white" }}> 
       <h2 style={{ fontSize: '32px', fontWeight: '900', marginBottom: '30px' }}>Owner Dashboard</h2>
 
-      {/* STATUS VERIFIKASI BOX */}
       {!isVerified && (
         <div style={{ 
           padding: '20px', 
@@ -58,7 +57,7 @@ export default function Dashboard() {
           <h4 style={{ margin: '0 0 10px 0', color: isPending ? '#0d47a1' : '#b71c1c' }}>
             {isPending ? "⏳ Verifikasi Sedang Diproses" : "⚠️ Akun Belum Terverifikasi"}
           </h4>
-          <p style={{ margin: 0, fontSize: '14px' }}>
+          <p style={{ margin: 0, fontSize: '14px', color: '#333' }}>
             {isPending 
               ? "Mohon tunggu, admin sedang meninjau dokumen KTP Anda. Fitur pengelolaan barang akan terbuka setelah akun disetujui." 
               : "Anda wajib melakukan verifikasi KTP terlebih dahulu untuk dapat mengunggah perlengkapan sewa."}
@@ -66,18 +65,18 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* FORM TAMBAH BARANG (Hanya muncul kalau sudah verified) */}
       <section style={{ 
         marginBottom: "40px", 
         padding: "30px", 
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)', 
+        backdropFilter: 'blur(10px)', 
         borderRadius: '20px',
-        boxShadow: '0 5px 15px rgba(0,0,0,0.05)',
+        boxShadow: '0 5px 15px rgba(0,0,0,0.2)',
         opacity: isVerified ? 1 : 0.6,
         pointerEvents: isVerified ? 'auto' : 'none'
       }}>
         <h3 style={{ marginTop: 0 }}>Tambah Alat Baru</h3>
-        {!isVerified && <p style={{ color: 'red', fontSize: '12px' }}>* Fitur ini terkunci sampai lo terverifikasi.</p>}
+        {!isVerified && <p style={{ color: '#ffaaaa', fontSize: '12px' }}>* Fitur ini terkunci sampai lo terverifikasi.</p>}
         <form onSubmit={handleAddEquipment}>
           <div style={{ marginBottom: '15px' }}>
             <label>Nama Alat:</label><br/>
@@ -89,16 +88,15 @@ export default function Dashboard() {
           </div>
           <div style={{ marginBottom: '20px' }}>
             <label>Upload Foto Alat:</label><br/>
-            <input type="file" onChange={(e) => setImageFile(e.target.files[0])} required />
+            <input type="file" onChange={(e) => setImageFile(e.target.files[0])} required style={{ color: 'white' }} />
           </div>
           <button type="submit" style={btnStyle}>Upload Alat</button>
         </form>
       </section>
 
-      {/* DAFTAR BOOKING */}
       <section>
         <h3>Daftar Permintaan Sewa</h3>
-        {bookings.length === 0 ? <p style={{ color: '#999' }}>Belum ada permintaan masuk.</p> : 
+        {bookings.length === 0 ? <p style={{ color: '#ccc' }}>Belum ada permintaan masuk.</p> : 
           bookings.map(b => (
             <div key={b._id} style={cardStyle}>
               <p><strong>{b.equipment.name}</strong> <span style={statusBadge}>{b.status}</span></p>
@@ -114,8 +112,8 @@ export default function Dashboard() {
   );
 }
 
-const inputStyle = { width: '100%', padding: '10px', marginTop: '5px', borderRadius: '8px', border: '1px solid #ddd' };
+const inputStyle = { width: '100%', padding: '10px', marginTop: '5px', borderRadius: '8px', border: '1px solid #ddd', color: '#000' };
 const btnStyle = { backgroundColor: "#28a745", color: "white", padding: '12px 25px', border: 'none', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer' };
-const cardStyle = { padding: '20px', borderBottom: "1px solid #eee", display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
-const statusBadge = { backgroundColor: '#eee', padding: '2px 8px', borderRadius: '5px', fontSize: '12px', marginLeft: '10px' };
+const cardStyle = { padding: '20px', borderBottom: "1px solid rgba(255,255,255,0.2)", display: 'flex', justifyContent: 'space-between', alignItems: 'center' };
+const statusBadge = { backgroundColor: '#eee', color: '#000', padding: '2px 8px', borderRadius: '5px', fontSize: '12px', marginLeft: '10px' };
 const actionBtn = (bg) => ({ backgroundColor: bg, color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer' });
