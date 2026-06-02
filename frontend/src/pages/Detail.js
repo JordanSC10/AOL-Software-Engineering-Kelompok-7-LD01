@@ -23,7 +23,7 @@ export default function Detail() {
 
   if (!item) {
     return (
-      <p style={{ textAlign: "center", marginTop: "50px" }}>
+      <p style={{ textAlign: "center", marginTop: "50px", color: "white" }}>
         Loading...
       </p>
     );
@@ -40,6 +40,7 @@ export default function Detail() {
         padding: "40px",
         maxWidth: "1100px",
         margin: "0 auto",
+        color: "white" 
       }}
     >
       <div
@@ -57,7 +58,7 @@ export default function Detail() {
             style={{
               width: "100%",
               borderRadius: "30px",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+              boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
               objectFit: "cover",
             }}
           />
@@ -77,7 +78,7 @@ export default function Detail() {
 
           <p
             style={{
-              color: "#007bff",
+              color: "#66b2ff", 
               fontSize: "24px",
               fontWeight: "700",
               marginBottom: "20px",
@@ -87,7 +88,7 @@ export default function Detail() {
             <span
               style={{
                 fontSize: "14px",
-                color: "#999",
+                color: "#ccc",
               }}
             >
               {" "}
@@ -98,7 +99,7 @@ export default function Detail() {
           <p
             style={{
               lineHeight: "1.8",
-              color: "#666",
+              color: "#ddd",
               marginBottom: "30px",
             }}
           >
@@ -118,9 +119,10 @@ export default function Detail() {
           <div
             style={{
               padding: "20px",
-              backgroundColor: "#f8f9fa",
+              backgroundColor: "rgba(255, 255, 255, 0.1)", 
+              backdropFilter: "blur(10px)",
               borderRadius: "15px",
-              border: "1px solid #eee",
+              border: "1px solid rgba(255, 255, 255, 0.2)",
               marginBottom: "20px",
               marginTop: "20px",
             }}
@@ -129,6 +131,7 @@ export default function Detail() {
               style={{
                 fontWeight: "bold",
                 fontSize: "14px",
+                color: "white"
               }}
             >
               DURASI RENTAL:
@@ -145,6 +148,7 @@ export default function Detail() {
                 marginTop: "10px",
                 borderRadius: "8px",
                 border: "1px solid #ddd",
+                color: "black" 
               }}
             >
               {[1, 2, 3, 4, 5, 6, 7].map((d) => (
@@ -162,7 +166,7 @@ export default function Detail() {
                 alignItems: "center",
               }}
             >
-              <span style={{ fontWeight: "600" }}>
+              <span style={{ fontWeight: "600", color: "#ddd" }}>
                 Total Estimasi:
               </span>
 
@@ -170,7 +174,7 @@ export default function Detail() {
                 style={{
                   fontSize: "24px",
                   fontWeight: "900",
-                  color: "#1a1a1a",
+                  color: "#fff",
                 }}
               >
                 Rp {totalPrice.toLocaleString("id-ID")}
@@ -184,18 +188,35 @@ export default function Detail() {
               ⚠️ Ini adalah barang milik Anda.
             </div>
           ) : (
-            <BookingForm
-              equipmentId={item._id}
-              duration={rentalDuration}
-              totalPrice={totalPrice}
-            />
+            <>
+              {/* INI TAMBAHAN DISCLAIMER NOMOR 3 */}
+              <div style={{ 
+                backgroundColor: 'rgba(255, 193, 7, 0.15)', 
+                border: '1px solid rgba(255, 193, 7, 0.5)', 
+                padding: '12px', 
+                borderRadius: '10px', 
+                marginBottom: '15px', 
+                fontSize: '13px', 
+                color: '#ffeeba',
+                textAlign: 'left',
+                lineHeight: '1.5'
+              }}>
+                ⚠️ <strong>Penting:</strong> Sebaiknya chat owner terlebih dahulu untuk memastikan ketersediaan alat, metode pembayaran, serta diskusi ongkir (Flat Rp10.000 untuk wilayah Jakarta).
+              </div>
+              
+              <BookingForm
+                equipmentId={item._id}
+                duration={rentalDuration}
+                totalPrice={totalPrice}
+              />
+            </>
           )}
         </div>
       </div>
 
       <hr
         style={{
-          border: "0.5px solid #eee",
+          border: "0.5px solid rgba(255,255,255,0.2)",
           margin: "40px 0",
         }}
       />
@@ -207,8 +228,9 @@ export default function Detail() {
 
 const ownerAlertStyle = {
   padding: "20px",
-  backgroundColor: "#fff3cd",
-  color: "#856404",
+  backgroundColor: "rgba(255, 193, 7, 0.2)",
+  color: "#ffd54f",
+  border: "1px solid rgba(255, 193, 7, 0.5)",
   borderRadius: "12px",
   textAlign: "center",
   fontWeight: "600",

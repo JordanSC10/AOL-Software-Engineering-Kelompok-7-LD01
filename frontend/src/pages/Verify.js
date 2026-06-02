@@ -54,6 +54,10 @@ export default function Verify() {
         <p style={{ fontSize: '13px', color: '#ddd', fontStyle: 'italic', margin: 0 }}>
           "ID is only used for security protection. Please use it wisely. Any inappropriate use will be processed according to the law."
         </p>
+        
+        <p style={{ fontSize: '12px', color: '#ffaaaa', margin: '5px 0 0 0', fontWeight: 'bold' }}>
+          * Demi keamanan, Anda diperbolehkan menyensor/menutup 4 digit terakhir NIK Anda.
+        </p>
       </div>
 
       <p style={{ color: '#eee', fontSize: '14px', marginBottom: '20px' }}>
