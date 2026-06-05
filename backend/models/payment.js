@@ -10,7 +10,7 @@ const paymentSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    default: null
   },
 
   // ✅ BIAYA SEWA
@@ -29,6 +29,11 @@ const paymentSchema = new mongoose.Schema({
   total: {
     type: Number,
     default: 0
+  },
+
+  shippingFee: {
+    type: Number,
+    default: 10000
   },
 
   // ✅ METODE PEMBAYARAN
@@ -65,4 +70,4 @@ const paymentSchema = new mongoose.Schema({
 
 }, { timestamps: true });
 
-module.exports = mongoose.model('Payment', paymentSchema);
+module.exports = mongoose.models.Payment || mongoose.model('Payment', paymentSchema);
