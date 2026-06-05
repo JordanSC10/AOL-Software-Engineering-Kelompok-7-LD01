@@ -1,16 +1,38 @@
 const Booking = require('../models/booking');
 
-// ✅ CREATE BOOKING (🔥 + VALIDATION)
+const populateBookingQuery = (query) => query
+  .populate({
+    path: 'equipmentId',
+    populate: {
+      path: 'ownerId',
+      select: 'name whatsapp bankName accountNumber accountHolder ownerQR'
+    }
+  })
+  .populate('userId');
+
+const formatBooking = (booking) => ({
+  ...booking._doc,
+  equipment: booking.equipmentId
+});
+
 exports.createBooking = async (req, res) => {
   try {
     const { userId, equipmentId, startDate, endDate, totalPrice } = req.body;
 
-    // 🔥 VALIDASI TANGGAL (ANTI DOUBLE BOOKING)
-    const existing = await Booking.findOne({
-      equipmentId,
-      startDate: { $lte: new Date(endDate) },
-      endDate: { $gte: new Date(startDate) }
-    });
+    if (!equipmentId) {
+      return res.status(400).json({ msg: 'equipmentId is required' });
+    }
+
+    let existing = null;
+
+    if (startDate && endDate) {
+      existing = await Booking.findOne({
+        equipmentId,
+        status: { $nin: ['rejected', 'cancelled'] },
+        startDate: { $lte: new Date(endDate) },
+        endDate: { $gte: new Date(startDate) }
+      });
+    }
 
     if (existing) {
       return res.status(400).json({
@@ -18,35 +40,32 @@ exports.createBooking = async (req, res) => {
       });
     }
 
-    // ✅ CREATE BOOKING
     const booking = new Booking({
-      userId,
+      userId: userId || null,
       equipmentId,
-      startDate,
-      endDate,
-      totalPrice
+      startDate: startDate || null,
+      endDate: endDate || null,
+      totalPrice: Number(totalPrice || 0),
+      status: 'pending'
     });
 
     await booking.save();
 
-    res.status(201).json(booking);
+    const populated = await populateBookingQuery(
+      Booking.findById(booking._id)
+    );
+
+    res.status(201).json(formatBooking(populated));
 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-// ✅ GET ALL BOOKINGS (🔥 POPULATE + FORMAT)
 exports.getBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find()
-      .populate('equipmentId')
-      .populate('userId');
-
-    const formatted = bookings.map(b => ({
-      ...b._doc,
-      equipment: b.equipmentId
-    }));
+    const bookings = await populateBookingQuery(Booking.find());
+    const formatted = bookings.map(formatBooking);
 
     res.json(formatted);
 
@@ -55,27 +74,27 @@ exports.getBookings = async (req, res) => {
   }
 };
 
-// ✅ UPDATE STATUS
 exports.updateBookingStatus = async (req, res) => {
   try {
     const { status } = req.body;
 
-    const booking = await Booking.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true }
-    )
-      .populate('equipmentId')
-      .populate('userId');
+    if (!['pending', 'approved', 'rejected', 'confirmed', 'cancelled', 'completed'].includes(status)) {
+      return res.status(400).json({ msg: 'Invalid booking status' });
+    }
+
+    const booking = await populateBookingQuery(
+      Booking.findByIdAndUpdate(
+        req.params.id,
+        { status },
+        { new: true }
+      )
+    );
 
     if (!booking) {
       return res.status(404).json({ msg: 'Booking not found' });
     }
 
-    res.json({
-      ...booking._doc,
-      equipment: booking.equipmentId
-    });
+    res.json(formatBooking(booking));
 
   } catch (err) {
     res.status(500).json({ error: err.message });
