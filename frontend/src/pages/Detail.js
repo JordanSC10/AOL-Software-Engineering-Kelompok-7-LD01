@@ -30,9 +30,14 @@ export default function Detail() {
   }
 
   const totalPrice = item.price * rentalDuration;
-
+  
   const isOwner =
-    user && (user.id === item.owner || user._id === item.owner);
+    user &&
+    item.ownerId &&
+    (
+      String(user._id || user.id) ===
+      String(item.ownerId._id || item.ownerId)
+    );
 
   return (
     <div

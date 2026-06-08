@@ -21,31 +21,48 @@ export default function Dashboard() {
     API.get("/booking").then(res => setBookings(res.data));
   };
 
-  const handleAddEquipment = async (e) => {
-    e.preventDefault();
-    if (price < 1000) return alert("Harga minimal Rp1.000!");
+const handleAddEquipment = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("image", imageFile);
-    formData.append("whatsapp", whatsapp);
-    formData.append("bankAccount", bankAccount);
+  if (price < 1000) {
+    return alert("Harga minimal Rp1.000!");
+  }
 
-    try {
-      await API.post("/equipment", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      alert("Alat berhasil ditambahkan!");
-      setName("");
-      setPrice("");
-      setImageFile(null);
-      setWhatsapp("");     
-      setBankAccount("");
-    } catch (err) {
-      alert("Gagal menambahkan alat.");
-    }
-  };
+  if (!user) {
+    return alert("User not found. Please login again.");
+  }
+
+  const formData = new FormData();
+
+  formData.append("name", name);
+  formData.append("price", price);
+  formData.append("image", imageFile);
+  formData.append("whatsapp", whatsapp);
+  formData.append("bankAccount", bankAccount);
+
+  // Save owner
+  formData.append("ownerId", user._id || user.id);
+
+  try {
+    await API.post("/equipment", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    alert("Alat berhasil ditambahkan!");
+
+    setName("");
+    setPrice("");
+    setImageFile(null);
+    setWhatsapp("");
+    setBankAccount("");
+
+  } catch (err) {
+    console.error(err);
+    alert("Gagal menambahkan alat.");
+  }
+};
 
   const isVerified = user?.isVerified === "confirmed";
   const isPending = user?.isVerified === "pending";
