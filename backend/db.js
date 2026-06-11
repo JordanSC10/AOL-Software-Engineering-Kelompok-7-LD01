@@ -1,9 +1,13 @@
 // backend/db.js
 // Contoh koneksi MongoDB dengan Mongoose
-
+const dns = require('dns');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+dns.setServers([
+  '1.1.1.1',
+  '8.8.8.8'
+]);
 dotenv.config();
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://willianawesome22_db_user:asu@gearshare.wdbc5hf.mongodb.net/GearShare?retryWrites=true&w=majority';

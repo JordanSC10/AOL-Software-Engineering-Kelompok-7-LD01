@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 import { io } from "socket.io-client";
 import { AuthContext } from '../context/AuthContext';
 
-// Koneksi ke backend (sesuain port backend lo)
+// Koneksi ke backend
 const socket = io("http://localhost:5000");
 
 export default function Chat({ roomId }) {

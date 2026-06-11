@@ -97,7 +97,7 @@ export default function Detail() {
               }}
             >
               {" "}
-              / day
+              / hari
             </span>
           </p>
 

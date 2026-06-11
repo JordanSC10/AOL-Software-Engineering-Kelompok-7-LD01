@@ -101,7 +101,7 @@ const handleAddEquipment = async (e) => {
         pointerEvents: isVerified ? 'auto' : 'none'
       }}>
         <h3 style={{ marginTop: 0 }}>Tambah Alat Baru</h3>
-        {!isVerified && <p style={{ color: '#ffaaaa', fontSize: '12px' }}>* Fitur ini terkunci sampai lo terverifikasi.</p>}
+        {!isVerified && <p style={{ color: '#ffaaaa', fontSize: '12px' }}>* Fitur ini terkunci sampai anda terverifikasi.</p>}
         <form onSubmit={handleAddEquipment}>
           <div style={{ marginBottom: '15px' }}>
             <label>Nama Alat:</label><br />

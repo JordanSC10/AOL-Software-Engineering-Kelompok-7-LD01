@@ -26,7 +26,7 @@ export default function Login() {
       navigate('/'); 
     } catch (err) {
       console.error(err);
-      alert('Login gagal! Cek email/password lo.');
+      alert('Login gagal! Cek email/password anda.');
     }
   };
 
